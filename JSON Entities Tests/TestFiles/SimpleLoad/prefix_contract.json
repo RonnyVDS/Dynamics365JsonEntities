@@ -1,0 +1,35 @@
+{
+	"metadata": {
+		"logicalName": "prefix_contract",
+		"keyAttributes": "prefix_contractid",
+		"attributes": [
+			{
+				"logicalName": "prefix_name",
+				"type": "string"
+			},
+			{
+				"logicalName": "prefix_accountid",
+				"type": "entityReference",
+				"LogicalNames": ["account"]
+			}
+		]
+	},
+	"entities": [
+		{
+			"id": "{3EF37B58-716C-4595-AEEF-1CABBFC101ED}",
+			"prefix_name": "Contract Name X",
+			"prefix_accountid": {
+				"id": "{8D3637C0-DF43-4D86-8B30-4DBAC737C28D}",
+				"logicalName": "account",
+				"name": "Account Name 1"
+			}
+		},
+		{
+			"id": "{837012D9-2F7A-4D93-B0BF-846484263437}",
+			"prefix_name": "Contract Name Y",
+			"prefix_accountid": {
+				"id": "{8D3637C0-DF43-4D86-8B30-4DBAC737C28D}"
+			}
+		}
+	]
+}

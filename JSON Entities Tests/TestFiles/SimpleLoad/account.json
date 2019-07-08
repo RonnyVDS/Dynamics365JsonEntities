@@ -1,0 +1,22 @@
+{
+	"metadata": {
+		"logicalName": "account",
+		"keyAttributes": "accountid",
+		"attributes": [
+			{
+				"logicalName": "name",
+				"type": "string"
+			}
+		]
+	},
+	"entities": [
+		{
+			"id": "{8D3637C0-DF43-4D86-8B30-4DBAC737C28D}",
+			"name": "Account Name 1"
+		},
+		{
+			"id": "{C6F64FD8-B7B1-4634-A965-ED4CB07744C2}",
+			"name": "Account Name 2"
+		}
+	]
+}

@@ -16,6 +16,14 @@
 		}
 
 		[TestMethod]
+		[ExpectedException(typeof(System.IO.DirectoryNotFoundException))]
+		public void BadDirectoryFile()
+		{
+			var ctx = new JsonEntitiesContext(@"\badPath\acc*.json");
+			ctx.Load();
+		}
+
+		[TestMethod]
 		public void TestFiles_SimpleLoad()
 		{
 			var ctx = new JsonEntitiesContext(@"\TestFiles\SimpleLoad");
@@ -26,12 +34,22 @@
 		}
 
 		[TestMethod]
+		public void TestFiles_SimpleLoadOneFile()
+		{
+			var ctx = new JsonEntitiesContext(@"\TestFiles\SimpleLoad\acc*.json");
+			var entities = ctx.Load();
+
+			Assert.AreEqual(2, entities.Count);
+		}
+
+		[TestMethod]
 		public void TestFiles_Empty()
 		{
 			var ctx = new JsonEntitiesContext(@"\TestFiles\Empty");
 			var entities = ctx.Load();
 
-			Assert.IsTrue(!entities.Any());
+			Assert.IsNotNull(entities);
+			Assert.IsTrue(entities.Any());
 		}
 
 		[TestMethod]

@@ -1,0 +1,30 @@
+{
+  "metadata": {
+    "logicalName": "car",
+    "keyAttributes": "carid",
+    "attributes": [
+      {
+        "logicalName": "brand",
+        "type": "string",
+        "logicalNames": null
+      },
+      {
+        "logicalName": "price",
+        "type": "int",
+        "logicalNames": null
+      }
+    ]
+  },
+  "entities": [
+    {
+      "id": "{1293da55-897e-4aa6-9920-5a2ce7708e83}",
+      "brand": "Volvo",
+      "price": 500
+    },
+    {
+      "id": "{2293da55-897e-4aa6-9920-5a2ce7708e83}",
+      "brand": "BMW",
+      "price": 500
+    }
+  ]
+}

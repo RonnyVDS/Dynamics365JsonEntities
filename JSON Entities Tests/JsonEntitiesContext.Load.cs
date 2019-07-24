@@ -1,34 +1,34 @@
-﻿namespace Profility.Dynamics365.JSONEntities.Tests
+﻿namespace Profility.JSONEntities.Tests
 {
 	using System;
 	using System.Linq;
 	using Microsoft.VisualStudio.TestTools.UnitTesting;
+	using Profility.JSONEntities.Tests.Components;
 
 	[TestClass]
 	public class JsonEntitiesContext_load
 	{
 		[TestMethod]
-		[ExpectedException(typeof(System.IO.DirectoryNotFoundException))]
+		[ExpectedError(typeof(LoadJsonEntityException), LoadJsonEntityException.BadDirectory)]
 		public void BadDirectory()
 		{
-			var ctx = new JsonEntitiesContext(@"\badPath");
+			var ctx = new JsonEntitiesConverter(@".\badPath");
 			ctx.Load();
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(System.IO.DirectoryNotFoundException))]
+		[ExpectedError(typeof(LoadJsonEntityException), LoadJsonEntityException.BadDirectory)]
 		public void BadDirectoryFile()
 		{
-			var ctx = new JsonEntitiesContext(@"\badPath\acc*.json");
-			ctx.Load();
+			var ctx = new JsonEntitiesConverter(@".\badPath\acc*.json");
+			var entities = ctx.Load();
 		}
 
 		[TestMethod]
 		public void TestFiles_SimpleLoad()
 		{
-			var ctx = new JsonEntitiesContext(@"\TestFiles\SimpleLoad");
+			var ctx = new JsonEntitiesConverter(@".\TestFiles\SimpleLoad\");
 			var entities = ctx.Load();
-
 			Assert.IsNotNull(entities);
 			Assert.IsTrue(entities.Any());
 		}
@@ -36,28 +36,42 @@
 		[TestMethod]
 		public void TestFiles_SimpleLoadOneFile()
 		{
-			var ctx = new JsonEntitiesContext(@"\TestFiles\SimpleLoad\acc*.json");
+			var ctx = new JsonEntitiesConverter(@".\TestFiles\SimpleLoad\acc*.json");
 			var entities = ctx.Load();
-
 			Assert.AreEqual(2, entities.Count);
 		}
 
 		[TestMethod]
 		public void TestFiles_Empty()
 		{
-			var ctx = new JsonEntitiesContext(@"\TestFiles\Empty");
-			var entities = ctx.Load();
+			var path = @".\TestFiles\Empty\";
+			if (!System.IO.Directory.Exists(path))
+			{
+				System.IO.Directory.CreateDirectory(path);
+			}
 
+			var ctx = new JsonEntitiesConverter(path);
+			var entities = ctx.Load();
 			Assert.IsNotNull(entities);
-			Assert.IsTrue(entities.Any());
+			Assert.IsTrue(!entities.Any());
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(LoadJsonEntityException))]
+		[ExpectedError(typeof(LoadJsonEntityException), LoadJsonEntityException.DuplicateKey)]
 		public void TestFiles_DuplicateKey()
 		{
-			var ctx = new JsonEntitiesContext(@"\TestFiles\DuplicateKey");
-			ctx.Load();
+			var ctx = new JsonEntitiesConverter(@".\TestFiles\DuplicateKey");
+			var entities = ctx.Load();
+			Assert.IsNotNull(entities);
+		}
+
+		[TestMethod]
+		[ExpectedError(typeof(LoadJsonEntityException), LoadJsonEntityException.BadFile)]
+		public void TestFiles_MissingFile()
+		{
+			var ctx = new JsonEntitiesConverter(@".\TestFiles\SimpleLoad\acount.json");
+			var entities = ctx.Load();
+			Assert.IsNotNull(entities);
 		}
 	}
 }

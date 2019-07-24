@@ -1,0 +1,12 @@
+{
+	"metadata": {
+		"logicalName": "account",
+		"keyAttributes": "accountid",
+		"attributes": [
+			{
+				"logicalName": "name",
+				"type": "string"
+			}
+		]
+	}
+}

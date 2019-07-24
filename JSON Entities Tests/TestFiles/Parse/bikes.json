@@ -1,0 +1,18 @@
+{
+	"metadata": {
+		"logicalName": "bike",
+		"keyAttributes": "bikeid",
+		"attributes": [
+			{
+				"logicalName": "bikeName",
+				"type": "string"
+			}
+		]
+	},
+	"entities": [
+		{
+			"id": "{3293DA55-897E-4AA6-9920-5A2CE7708E83}",
+			"bikeName": "bike1"
+		}
+	]
+}

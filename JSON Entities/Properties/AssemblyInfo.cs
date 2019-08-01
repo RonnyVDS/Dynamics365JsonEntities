@@ -6,10 +6,10 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Dynamics 365 JSON Entities")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Keep data from Dynamics 365, CRM or XRM in a JSON format and load the into Entity objects.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Profility.be")]
-[assembly: AssemblyProduct("JSON Entities")]
+[assembly: AssemblyProduct("Dynamics 365 JSON Entities")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

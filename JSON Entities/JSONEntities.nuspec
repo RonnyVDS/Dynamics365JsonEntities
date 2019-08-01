@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Profility.JSONEntities</id>
+    <version>$version$</version>
+    <authors>Ronny Van der Snickt;Yenthe Rossel</authors>
+    <owners>Ronny Van der Snickt</owners>
+		<license type="expression">MIT</license>
+    <projectUrl>https://github.com/RonnyVDS/Dynamics365JsonEntities</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/RonnyVDS/Dynamics365JsonEntities/master/JSON%20Entities/logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<title>$title$</title>
+		<description>Keep data from Dynamics 365, CRM or XRM in a JSON format and load the into Entity objects.</description>
+    <copyright>Copyright 2019</copyright>
+    <tags>d365 powerapps dynamics365 crm xrm</tags>
+    <dependencies>
+      <dependency id="Microsoft.CrmSdk.CoreAssemblies" version="8.0" />
+			<dependency id="Newtonsoft.Json" version="10.0" />
+    </dependencies>
+  </metadata>
+</package>

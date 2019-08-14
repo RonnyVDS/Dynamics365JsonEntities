@@ -1,0 +1,33 @@
+﻿{
+	"metadata": {
+		"logicalName": "human_pet",
+		"keyAttributes": "human_petid",
+		"attributes": [
+			{
+				"logicalName": "humanid",
+				"type": "guid"
+			},
+			{
+				"logicalName": "petid",
+				"type": "guid"
+			},
+			{
+				"logicalName": "age",
+				"type": "int"
+			}
+		],
+		"entityType": "intersect"
+	},
+	"entities": [
+		{
+			"id": "{4a8cfefc-0d45-4fc6-adf7-3aff471d5382}",
+			"humanid": "{3e1846fe-53f3-4c23-8718-fe7bdd5c3c42}",
+			"petid": "{367fb4df-ee68-46a9-bf97-25216c9fbd63}"
+		},
+		{
+			"id": "{082b9fd8-5bc5-4c01-801e-bb936b170371}",
+			"humanid": "{3e1846fe-53f3-4c23-8718-fe7bdd5c3c42}",
+			"petid": "{9986fce9-ffe3-4907-bc95-ca9e675092c4}"
+		}
+	]
+}

@@ -17,6 +17,11 @@
 
 		public const string CannotConvertValue = "Failed to convert value.";
 
+		public const string IntersectNotInRightFormat = "Intersect not in right format";
+
+		public const string InvalidMetaData = "Invalid metadata.";
+
+
 		public LoadJsonEntityException()
 		{
 		}

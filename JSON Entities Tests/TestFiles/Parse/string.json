@@ -1,0 +1,18 @@
+{
+	"metadata": {
+		"logicalName": "human",
+		"keyAttributes": "humanid",
+		"attributes": [
+			{
+				"logicalName": "fullname",
+				"type": "string"
+			}
+		]
+	},
+	"entities": [
+		{
+			"id": "{3293DA55-897E-4AA6-9920-5A2CE7708E83}",
+			"fullname": "Arnold Schwarzenegger"
+		}
+	]
+}

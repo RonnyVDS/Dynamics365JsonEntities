@@ -49,6 +49,11 @@
 			}
 		}
 
+		internal static void SaveJson(string path, string json)
+		{
+			File.WriteAllText(path, json);
+		}
+
 		private static void DirectoryCheck(this string path)
 		{
 			if (!System.IO.Directory.Exists(path))

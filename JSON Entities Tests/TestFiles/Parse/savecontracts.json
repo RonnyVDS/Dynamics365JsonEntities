@@ -1,0 +1,70 @@
+{
+  "metadata": {
+    "logicalName": "contract",
+    "keyAttributes": "contractid",
+    "attributes": [
+      {
+        "logicalName": "contractname",
+        "type": "string"
+      },
+      {
+        "logicalName": "aribanumber",
+        "type": "int"
+      },
+      {
+        "logicalName": "aribanFloat",
+        "type": "float"
+      },
+      {
+        "logicalName": "aribaDecimal",
+        "type": "decimal"
+      },
+      {
+        "logicalName": "isDisabled",
+        "type": "bool"
+      },
+      {
+        "logicalName": "status",
+        "type": "optionsetvalue"
+      },
+      {
+        "logicalName": "DateOfBirth",
+        "type": "datetime"
+      },
+      {
+        "logicalName": "prefix_accountid",
+        "type": "entityreference",
+        "logicalNames": [
+          "account"
+        ]
+      }
+    ]
+  },
+  "entities": [
+    {
+      "id": "{3293da55-897e-4aa6-9920-5a2ce7708e83}",
+      "contractname": "Contract1",
+      "aribanumber": 3000,
+      "aribanfloat": 0.3333333,
+      "aribadecimal": 0.333333333333333,
+      "isdisabled": true,
+      "status": 0,
+      "dateofbirth": "2019-04-18 12:00:00",
+      "prefix_accountid": {
+        "id": "{8d3637c0-df43-4d86-8b30-4dbac737c28d}",
+        "logicalName": null,
+        "name": "Account Name 1"
+      }
+    },
+    {
+      "id": "{3293da55-897e-4aa6-9920-5a2ce7708e84}",
+      "contractname": "Contract2",
+      "aribanumber": 4000,
+      "aribanfloat": 0.333333462,
+      "aribadecimal": 0.333333333333333,
+      "isdisabled": true,
+      "status": 1,
+      "dateofbirth": "2001-04-18 12:00:00"
+    }
+  ]
+}

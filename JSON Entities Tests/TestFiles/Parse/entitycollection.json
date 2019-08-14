@@ -1,0 +1,53 @@
+﻿{
+	"metadata": {
+		"logicalName": "email",
+		"keyAttributes": "activityid",
+		"attributes": [
+			{
+				"logicalName": "mimetype",
+				"type": "string"
+			},
+			{
+				"logicalName": "to",
+				"type": "entitycollection",
+				"submetadata": {
+					"logicalName": "activityparty",
+					"attributes": [
+						{
+							"logicalName": "addressused",
+							"type": "string"
+						},
+						{
+							"logicalName": "addressusedemailcolumnnumber",
+							"type": "int"
+						},
+						{
+							"logicalName": "donotfax",
+							"type": "bool"
+						}
+					]
+				}
+			}
+		]
+	},
+	"entities": [
+		{
+			"id": "{1e0390b5-b573-4556-83a8-13be9998ade4}",
+			"mimetype": "whatisamimetype",
+			"to": [
+				{
+					"id": "{879db441-1ade-4484-9d11-fe5306e0abc9}",
+					"addressused": "Jan@gmail.com",
+					"addressusedemailcolumnnumber": 47,
+					"donotfax": false
+				},
+				{
+					"id": "{979db441-1ade-4484-9d11-fe5306e0abc9}",
+					"addressused": "Mark@gmail.com",
+					"addressusedemailcolumnnumber": 48,
+					"donotfax": true
+				}
+			]
+		}
+	]
+}

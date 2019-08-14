@@ -30,6 +30,10 @@
 				}
 				collection.Add(entity);
 			}
+
+			Validate.ForCorrectMetaData(entityContainer.Metadata);
+			Validate.ForIntersectData(entityContainer.Metadata, collection);
+
 			return collection;
 		}
 
@@ -76,9 +80,9 @@
 					var valueRef = fieldValue as EntityReferenceValue;
 					if (valueRef == null || valueRef.Id == null) throw new LoadJsonEntityException(LoadJsonEntityException.CannotConvertValue);
 
-					if (Guid.TryParse(valueRef.Id as string, out Guid id))
+					if (Guid.TryParse(valueRef.Id as string, out Guid entityReferenceId))
 					{
-						entityRef.Id = id;
+						entityRef.Id = entityReferenceId;
 					}
 					else throw new LoadJsonEntityException(LoadJsonEntityException.CannotConvertValue);
 					entityRef.LogicalName = valueRef.LogicalName;
@@ -86,6 +90,23 @@
 
 					return entityRef;
 
+				case DataTypes.Guid:
+					if (Guid.TryParse(fieldValue as string, out Guid id))
+					{
+						return id;
+					}
+					else throw new LoadJsonEntityException(LoadJsonEntityException.CannotConvertValue);
+
+				case DataTypes.EntityCollection:
+					try
+					{
+						return GetEntityCollection(fieldValue as List<EntityAttributes>, metaDataAttribute.SubMetadata); ;
+					}
+					catch (Exception)
+					{
+						throw new LoadJsonEntityException(LoadJsonEntityException.CannotConvertValue);
+					}
+					
 				default:
 					throw new NotImplementedException("Value type not not implemented.");
 			}
@@ -113,6 +134,31 @@
 			}
 
 			return meta;
+		}
+
+		private static EntityCollection GetEntityCollection(List<EntityAttributes> collection, MetaData subMetadata)
+		{
+			var entityCollection = new EntityCollection();
+
+			foreach (var item in collection)
+			{
+				var activityParty = new Entity(subMetadata.LogicalName, GetId(item));
+				
+				foreach (var i in item)
+				{
+					var fieldName = i.Key;
+					var fieldValue = i.Value;
+					if (fieldName == "id") { continue; }
+
+					var metaDataAttribute = GetMetaDataAttribute(subMetadata, fieldName);
+					activityParty[fieldName] = ConvertValue(metaDataAttribute, fieldValue);
+
+				}
+
+				entityCollection.Entities.Add(activityParty);
+			}
+
+			return entityCollection;
 		}
 	}
 }

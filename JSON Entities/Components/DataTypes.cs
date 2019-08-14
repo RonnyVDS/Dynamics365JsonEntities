@@ -9,8 +9,8 @@
 		public const string Bool = "bool";
 		public const string OptionSetValue = "optionsetvalue";
 		public const string DateTime = "datetime";
-
 		public const string EntityReference = "entityreference";
-		//public const string EntityCollection = "ENTITYCOLLECTION";
+		public const string Guid = "guid";
+		public const string EntityCollection = "entitycollection";
 	}
 }

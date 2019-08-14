@@ -1,11 +1,9 @@
 ﻿namespace Profility.JSONEntities
 {
-	using System.IO;
+	using System;
 	using System.Linq;
-	using Newtonsoft.Json;
 	using Microsoft.Xrm.Sdk;
 	using System.Collections.Generic;
-	using Profility.JSONEntities.Model;
 
 	public class JsonEntitiesConverter
 	{
@@ -37,42 +35,17 @@
 			return entities;
 		}
 
-		public bool Save(string savePath, MetaData meta, List<Entity> collection)
+		public void Save(string savePath, MetaData meta, List<Entity> collection)
 		{
-			var obj = GetRootObject(meta, collection);
+			// Load into entityContainer
+			var entityContainer = Convert.EntityListToEntityContainer(meta, collection);
 
-			var txt = JsonConvert.SerializeObject(obj, Formatting.Indented);
+			// Get Json from entityContainer
+			var txt = Convert.ModelToJson(entityContainer);
 
-			File.WriteAllText(savePath, txt);
-			File.WriteAllText(@".\..\." + savePath, txt);
-
-			return true;
-		}
-
-		#region Helpers
-
-		private static EntityContainer GetRootObject(MetaData meta, List<Entity> collection)
-		{
-
-			var list = new List<EntityAttributes>();
-			foreach (var entity in collection)
-			{
-				var d = new EntityAttributes();
-				d.Add("id", $"{{{entity.Id.ToString()}}}");
-				foreach (var a in entity.Attributes)
-				{
-					if (a.Key == meta.KeyAttributes) { continue; }
-					d.Add(a.Key, a.Value);
-				}
-				list.Add(d);
-			}
-
-
-			return new EntityContainer() { Metadata = meta, Entities = list };
-
-		}
-
-
-		#endregion
+			// Save the Json
+			IO.Helper.SaveJson(savePath, txt);
+			IO.Helper.SaveJson(@".\..\." + savePath, txt);		
+		}	
 	}
 }

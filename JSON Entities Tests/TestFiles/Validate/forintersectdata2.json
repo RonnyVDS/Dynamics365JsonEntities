@@ -1,0 +1,18 @@
+﻿{
+	"metadata": {
+		"logicalName": "human_pet",
+		"keyAttributes": "human_petid",
+		"attributes": [
+			{
+				"logicalName": "humanid",
+				"type": "guid"
+			},
+			{
+				"logicalName": "petid",
+				"type": "guid"
+			}
+		],
+		"entityType": "intersect"
+	},
+	"entities": []
+}

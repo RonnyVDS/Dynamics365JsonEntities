@@ -13,7 +13,10 @@
 		[DataMember(Name = "type")]
 		public string Type { get; set; }
 
-		[DataMember(Name = "logicalNames")]
+		[DataMember(Name = "logicalNames", EmitDefaultValue = false)]
 		public List<string> LogicalNames { get; set; }
+
+		[DataMember(Name = "subMetadata", EmitDefaultValue = false)]
+		public MetaData SubMetadata { get; set; }
 	}
 }

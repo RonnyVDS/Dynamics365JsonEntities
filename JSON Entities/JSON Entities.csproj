@@ -72,6 +72,8 @@
   <ItemGroup>
     <Compile Include="Components\DataTypes.cs" />
     <Compile Include="Convert\EntityContainerToEntityList.cs" />
+    <Compile Include="Convert\EntityListToEntityContainer.cs" />
+    <Compile Include="Convert\ModelToJson.cs" />
     <Compile Include="Convert\JsonToModel.cs" />
     <Compile Include="Model\EntityReferenceValue.cs" />
     <Compile Include="Model\EntityAttributes.cs" />
@@ -82,7 +84,9 @@
     <Compile Include="JsonEntitiesConverter.cs" />
     <Compile Include="Model\MetaData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Validate\JsonToModel.cs" />
+    <Compile Include="Validate\ForCorrectMetaData.cs" />
+    <Compile Include="Validate\ForDuplicateIds.cs" />
+    <Compile Include="Validate\ForIntersectData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

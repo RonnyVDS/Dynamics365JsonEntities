@@ -1,18 +1,18 @@
 {
 	"metadata": {
-		"logicalName": "bike",
-		"keyAttributes": "bikeid",
+		"logicalName": "human",
+		"keyAttributes": "humanid",
 		"attributes": [
 			{
-				"logicalName": "bikeName",
-				"type": "string"
+				"logicalName": "age",
+				"type": "int"
 			}
 		]
 	},
 	"entities": [
 		{
 			"id": "{3293DA55-897E-4AA6-9920-5A2CE7708E83}",
-			"bikeName": "bike1"
+			"age": 72
 		}
 	]
 }

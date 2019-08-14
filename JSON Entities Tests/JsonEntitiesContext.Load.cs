@@ -1,6 +1,5 @@
 ﻿namespace Profility.JSONEntities.Tests
 {
-	using System;
 	using System.Linq;
 	using Microsoft.VisualStudio.TestTools.UnitTesting;
 	using Profility.JSONEntities.Tests.Components;
@@ -10,41 +9,41 @@
 	{
 		[TestMethod]
 		[ExpectedError(typeof(LoadJsonEntityException), LoadJsonEntityException.BadDirectory)]
-		public void BadDirectory()
+		public void Load_BadDirectory()
 		{
-			var ctx = new JsonEntitiesConverter(@".\badPath");
+			var ctx = new JsonEntitiesConverter(@".TestFiles\Load\badPath");
 			ctx.Load();
 		}
 
 		[TestMethod]
 		[ExpectedError(typeof(LoadJsonEntityException), LoadJsonEntityException.BadDirectory)]
-		public void BadDirectoryFile()
+		public void Load_BadDirectoryFile()
 		{
-			var ctx = new JsonEntitiesConverter(@".\badPath\acc*.json");
+			var ctx = new JsonEntitiesConverter(@".TestFiles\Load\badPath\acc*.json");
 			var entities = ctx.Load();
 		}
 
 		[TestMethod]
-		public void TestFiles_SimpleLoad()
+		public void Load_SimpleLoad()
 		{
-			var ctx = new JsonEntitiesConverter(@".\TestFiles\SimpleLoad\");
+			var ctx = new JsonEntitiesConverter(@".\TestFiles\Load\NotEmpty");
 			var entities = ctx.Load();
 			Assert.IsNotNull(entities);
 			Assert.IsTrue(entities.Any());
 		}
 
 		[TestMethod]
-		public void TestFiles_SimpleLoadOneFile()
+		public void Load_SimpleLoadOneFile()
 		{
-			var ctx = new JsonEntitiesConverter(@".\TestFiles\SimpleLoad\acc*.json");
+			var ctx = new JsonEntitiesConverter(@".\TestFiles\Load\acc*.json");
 			var entities = ctx.Load();
 			Assert.AreEqual(2, entities.Count);
 		}
 
 		[TestMethod]
-		public void TestFiles_Empty()
+		public void Load_Empty()
 		{
-			var path = @".\TestFiles\Empty\";
+			var path = @".\TestFiles\Load\Empty\";
 			if (!System.IO.Directory.Exists(path))
 			{
 				System.IO.Directory.CreateDirectory(path);
@@ -58,20 +57,45 @@
 
 		[TestMethod]
 		[ExpectedError(typeof(LoadJsonEntityException), LoadJsonEntityException.DuplicateKey)]
-		public void TestFiles_DuplicateKey()
+		public void Load_DuplicateKey()
 		{
-			var ctx = new JsonEntitiesConverter(@".\TestFiles\DuplicateKey");
+			var ctx = new JsonEntitiesConverter(@".\TestFiles\Load\duplicateKey.json");
 			var entities = ctx.Load();
 			Assert.IsNotNull(entities);
 		}
 
 		[TestMethod]
 		[ExpectedError(typeof(LoadJsonEntityException), LoadJsonEntityException.BadFile)]
-		public void TestFiles_MissingFile()
+		public void Load_MissingFile()
 		{
-			var ctx = new JsonEntitiesConverter(@".\TestFiles\SimpleLoad\acount.json");
+			var ctx = new JsonEntitiesConverter(@".\TestFiles\Load\acount.json");
 			var entities = ctx.Load();
 			Assert.IsNotNull(entities);
+		}
+
+		[TestMethod]
+		[ExpectedError(typeof(LoadJsonEntityException), LoadJsonEntityException.IDNotDefined)]
+		public void Load_IdNotDefined()
+		{
+			var ctx = new JsonEntitiesConverter(@".\TestFiles\Load\idnotdefined.json");
+			var entities = ctx.Load();
+		}
+
+		[TestMethod]
+		[ExpectedError(typeof(LoadJsonEntityException), LoadJsonEntityException.FieldNameNotInMetaData)]
+		public void Load_FieldNameNotInMetaData()
+		{
+			var ctx = new JsonEntitiesConverter(@".\TestFiles\Load\fieldnamenotinmetadata.json");
+			ctx.Load();
+		}
+
+		[TestMethod]
+		public void Load_DuplicateFieldName()
+		{
+			var ctx = new JsonEntitiesConverter(@".\TestFiles\Load\duplicatefieldname.json");
+			var entities = ctx.Load();
+			Assert.IsNotNull(entities);
+			Assert.IsTrue(entities.Any());
 		}
 	}
 }

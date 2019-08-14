@@ -1,0 +1,18 @@
+﻿{
+	"metadata": {
+		"logicalName": "human",
+		"keyAttributes": "humanid",
+		"attributes": [
+			{
+			}
+		]
+	},
+	"entities": [
+		{
+			"id": "{1293DA55-897E-4AA6-9920-1A2CE7708E83}"
+		},
+		{
+			"id": "{1293DA55-897E-4AA6-9920-1A2CE7708E83}"
+		}
+	]
+}

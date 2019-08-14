@@ -1,0 +1,33 @@
+{
+  "metadata": {
+    "logicalName": "human",
+    "keyAttributes": "humanid",
+    "attributes": [
+      {
+        "logicalName": "fullname",
+        "type": "string"
+      },
+      {
+        "logicalName": "age",
+        "type": "int"
+      },
+      {
+        "logicalName": "haircolor",
+        "type": "optionsetvalue"
+      },
+      {
+        "logicalName": "heightincm",
+        "type": "decimal"
+      }
+    ]
+  },
+  "entities": [
+    {
+      "id": "{1293da55-897e-4aa6-9920-5a2ce7708e83}",
+      "fullname": "Arnold Schwarzenegger",
+      "age": 72,
+      "haircolor": 2,
+      "heightincm": 208.0
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+	"metadata": {
+		"logicalName": "human",
+		"keyAttributes": "humanid",
+		"attributes": [
+			{
+				"logicalName": "fullname",
+				"type": "string"
+			}
+		]
+	},
+	"entities": [
+		{
+			"fullname": "Arnold Schwarzenegger"
+		}
+	]
+}

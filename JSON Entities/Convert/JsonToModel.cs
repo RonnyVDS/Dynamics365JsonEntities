@@ -2,6 +2,7 @@
 {
 	using Newtonsoft.Json;
 	using Profility.JSONEntities.Model;
+	using System.Collections.Generic;
 
 	internal static partial class Convert
 	{
@@ -16,14 +17,19 @@
 
 				foreach (var keyValuePair in entityContainer.Entities[i])
 				{
-					if (!(keyValuePair.Value is Newtonsoft.Json.Linq.JObject))
-					{
-						convertedAttributes.Add(keyValuePair.Key.ToLower(), keyValuePair.Value);
-					}
-					else
+					if (keyValuePair.Value is Newtonsoft.Json.Linq.JObject)
 					{
 						var refValue = (keyValuePair.Value as Newtonsoft.Json.Linq.JObject).ToObject<EntityReferenceValue>();
 						convertedAttributes.Add(keyValuePair.Key.ToLower(), refValue);
+					}
+					else if (keyValuePair.Value is Newtonsoft.Json.Linq.JArray)
+					{
+						var refValue = (keyValuePair.Value as Newtonsoft.Json.Linq.JArray).ToObject<List<EntityAttributes>>();
+						convertedAttributes.Add(keyValuePair.Key.ToLower(), refValue);
+					}
+					else
+					{
+						convertedAttributes.Add(keyValuePair.Key.ToLower(), keyValuePair.Value);
 					}
 				}
 

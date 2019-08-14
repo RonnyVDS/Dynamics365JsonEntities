@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "logicalName": "human",
+    "keyAttributes": "humanid",
+    "attributes": [
+      {
+        "logicalName": "countryid",
+        "type": "entityreference",
+        "logicalNames": [
+          "country"
+        ]
+      }
+    ]
+  },
+  "entities": [
+    {
+      "id": "{1293da55-897e-4aa6-9920-5a2ce7708e83}",
+      "countryid": {
+        "id": "{8d3637c0-df43-4d86-8b30-4dbac737c28d}",
+        "logicalName": "country",
+        "name": "Belgium"
+      }
+    }
+  ]
+}

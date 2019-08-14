@@ -1,0 +1,18 @@
+{
+	"metadata": {
+		"logicalName": "human",
+		"keyAttributes": "humanid",
+		"attributes": [
+			{
+				"logicalName": "dateofbirth",
+				"type": "datetime"
+			}
+		]
+	},
+	"entities": [
+		{
+			"id": "{3293DA55-897E-4AA6-9920-5A2CE7708E83}",
+			"dateofbirth": "1993-04-29 00:00:00"
+		}
+	]
+}

@@ -6,17 +6,34 @@
 			{
 				"logicalName": "name",
 				"type": "string"
+			},
+			{
+				"logicalName": "statecode",
+				"type": "optionsetvalue"
+			},
+			{
+				"logicalName": "statuscode",
+				"type": "optionsetvalue"
+			},
+			{
+				"logicalName": "telephone1",
+				"type": "string"
 			}
 		]
 	},
 	"entities": [
 		{
 			"id": "{8D3637C0-DF43-4D86-8B30-4DBAC737C28D}",
+			"statecode": 0,
+			"statuscode": 1,
 			"name": "Name 1"
 		},
 		{
 			"id": "{C6F64FD8-B7B1-4634-A965-ED4CB07744C2}",
-			"name": "Name 2"
+			"statecode": 0,
+			"statuscode": 1,
+			"name": "Name 2",
+			"telephone1": 123
 		}
 	]
 }

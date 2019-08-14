@@ -53,7 +53,7 @@
 			switch (metaDataAttribute.Type.ToLower())
 			{
 				case DataTypes.String:
-					return fieldValue as string;
+					return fieldValue.ToString();
 
 				case DataTypes.Int:
 					if (fieldValue is int) return fieldValue;

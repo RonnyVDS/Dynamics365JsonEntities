@@ -75,6 +75,7 @@
     <Compile Include="Convert\EntityListToEntityContainer.cs" />
     <Compile Include="Convert\ModelToJson.cs" />
     <Compile Include="Convert\JsonToModel.cs" />
+    <Compile Include="JsonEntitiesConverterSettings.cs" />
     <Compile Include="Model\EntityReferenceValue.cs" />
     <Compile Include="Model\EntityAttributes.cs" />
     <Compile Include="Model\MetaDataAttribute.cs" />

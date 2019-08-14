@@ -1,151 +1,144 @@
 ﻿namespace Profility.JSONEntities.Tests
 {
-	using Microsoft.VisualStudio.TestTools.UnitTesting;
 	using System;
+	using System.IO;
 	using System.Collections.Generic;
-	using System.Linq;
+	using Microsoft.VisualStudio.TestTools.UnitTesting;
+	using Microsoft.Xrm.Sdk;
 
 	[TestClass]
-	public class JsonEntitiesContext_Save
+	public class JsonEntitiesContext_Save : BaseTests
 	{
 		[TestMethod]
-		public void Save_SimpleDatatypes()
+		public void Save_JsonValidation()
 		{
-			var loadPath = @".\TestFiles\Save\savesimpledatatypes-load.json";
-			var savepath = @".\TestFiles\Save\savesimpledatatypes-save.json";
-
-			var ctx = new JsonEntitiesConverter(loadPath);
-			var humans = ctx.Load();
+			/*
+			 * Metadata
+			 */
 			var meta = new MetaData()
 			{
-				LogicalName = "human",
-				KeyAttributes = "humanid",
+				LogicalName = "entityLogicalName",
+				KeyAttributes = "entityLogicalNameid",
 				Attributes = new List<MetaDataAttribute>()
 				{
-					new MetaDataAttribute() {LogicalName = "fullname", Type = DataTypes.String},
-					new MetaDataAttribute() {LogicalName = "age", Type = DataTypes.Int},
-					new MetaDataAttribute() {LogicalName = "haircolor", Type = DataTypes.OptionSetValue},
-					new MetaDataAttribute() {LogicalName = "heightincm", Type = DataTypes.Decimal},
+					new MetaDataAttribute("nullField", DataTypes.String),
+					new MetaDataAttribute("stringField", DataTypes.String),
+					new MetaDataAttribute("intField", DataTypes.Int),
+					new MetaDataAttribute("optionsetvalueField", DataTypes.OptionSetValue),
+					new MetaDataAttribute("decimalField", DataTypes.Decimal),
+					new MetaDataAttribute("dateField", DataTypes.DateTime),
+					new MetaDataAttribute("guidField", DataTypes.Guid),
+					new MetaDataAttribute("entityReferenceField", DataTypes.EntityReference) {
+						LogicalNames = new List<string>(){"otherEntityName"}
+					}
 				}
 			};
 
-			ctx.Save(savepath, meta, humans);
+
+			/*
+			 * Data
+			 */
+			var entities = new List<Entity>();
+			var e1 = new Entity("entityLogicalName", new Guid("{1293da55-897e-4aa6-9920-5a2ce7708e83}"));
+			e1["nullField"] = null;
+			e1["stringField"] = "testString";
+			e1["intField"] = 5;
+			e1["optionsetvalueField"] = new OptionSetValue(6);
+			e1["decimalField"] = 5.5m;
+			e1["dateField"] = new DateTime(2000, 02, 01, 20, 21, 22);
+			e1["guidField"] = new Guid("{F8B7655D-E0D7-407E-BAEA-6F943B56DB92}");
+			e1["entityReferenceField"] = new EntityReference("otherEntityName", new Guid("{47BC8104-600F-4C36-87E7-D7303D267EA0}"));
+			e1["fieldNotInMetadata"] = "fieldNotInMetadataValue";
+			entities.Add(e1);
+
+			/*
+			 * Execute
+			 */
+			var ctx = new JsonEntitiesConverter(new JsonEntitiesConverterSettings() {
+				IndentJson = false,
+				QuoteChar = '\''
+			});
+			var json = ctx.ToJson(meta, entities);
+
+			/*
+			 * Validate
+			 */
+			// Metadata
+			Assert.IsTrue(json.Contains("{'logicalName':'nullField','type':'string'}"));
+			Assert.IsTrue(json.Contains("{'logicalName':'stringField','type':'string'}"));
+			Assert.IsTrue(json.Contains("{'logicalName':'intField','type':'int'}"));
+			Assert.IsTrue(json.Contains("{'logicalName':'optionsetvalueField','type':'optionsetvalue'}"));
+			Assert.IsTrue(json.Contains("{'logicalName':'decimalField','type':'decimal'}"));
+			Assert.IsTrue(json.Contains("{'logicalName':'dateField','type':'datetime'}"));
+			Assert.IsTrue(json.Contains("{'logicalName':'guidField','type':'guid'}"));
+			Assert.IsTrue(json.Contains("{'logicalName':'entityReferenceField','type':'entityreference','logicalNames':['otherEntityName']}"));
+			Assert.IsFalse(json.Contains("fieldNotInMetadata"));
+
+			// Data
+			 Assert.IsTrue(json.Contains("'nullField':null"));
+			Assert.IsTrue(json.Contains("'stringField':'testString'"));
+			Assert.IsTrue(json.Contains("'intField':5"));
+			Assert.IsTrue(json.Contains("'optionsetvalueField':6"));
+			Assert.IsTrue(json.Contains("'decimalField':5.5"));
+			Assert.IsTrue(json.Contains("'dateField':'2000-02-01 20:21:22'"));
+			Assert.IsTrue(json.Contains("'guidField':'{f8b7655d-e0d7-407e-baea-6f943b56db92}'"));
+			Assert.IsTrue(json.Contains("'entityReferenceField':{'id':'{47bc8104-600f-4c36-87e7-d7303d267ea0}','logicalName':'otherEntityName'}"));
 		}
 
-		[TestMethod]
-		public void Save_DateTime()
-		{
-			var loadPath = @".\TestFiles\Save\datetime-load.json";
-			var savePath = @".\TestFiles\Save\datetime-save.json";
-			var meta = new MetaData()
-			{
-				LogicalName = "human",
-				KeyAttributes = "humanid",
-				Attributes = new List<MetaDataAttribute>()
-				{
-					new MetaDataAttribute() {LogicalName = "dateofbirth", Type = DataTypes.DateTime},
-				}
-			};
-
-			var ctx = new JsonEntitiesConverter(loadPath);
-			var humans = ctx.Load();
-
-			ctx.Save(savePath, meta, humans);
-		}
-
-		[TestMethod]
-		public void Save_EntityReference()
-		{
-			var loadPath = @".\TestFiles\Save\entityreference-load.json";
-			var savePath = @".\TestFiles\Save\entityreference-save.json";
-			var meta = new MetaData()
-			{
-				LogicalName = "human",
-				KeyAttributes = "humanid",
-				Attributes = new List<MetaDataAttribute>()
-				{
-					new MetaDataAttribute() {
-						LogicalName = "countryid",
-						Type = DataTypes.EntityReference,
-						LogicalNames = new List<string>(){"country"}
-					},
-				}
-			};
-
-			var ctx = new JsonEntitiesConverter(loadPath);
-			var humans = ctx.Load();
-
-			ctx.Save(savePath, meta, humans);
-		}
-
-		[TestMethod]
-		public void Save_Intersect()
-		{
-			var loadPath = @".\TestFiles\Save\intersect-load.json";
-			var savePath = @".\TestFiles\Save\intersect-save.json";
-			var ctx = new JsonEntitiesConverter(loadPath);
-			var intersect = ctx.Load();
-
-			var meta = new MetaData()
-			{
-				LogicalName = "human_pet",
-				KeyAttributes = "human_petid",
-				Attributes = new List<MetaDataAttribute>()
-				{
-					new MetaDataAttribute() {LogicalName = "humanid", Type = DataTypes.Guid},
-					new MetaDataAttribute() {LogicalName = "petid", Type = DataTypes.Guid},
-				},
-				EntityType = "intersect"
-			};
-
-			ctx.Save(savePath, meta, intersect);
-		}
-
-		[TestMethod]
-		public void Save_ValidateDataAfterSave()
-		{
-			var loadPath = @".\TestFiles\Save\validatedataaftersave.json";
-			var ctx = new JsonEntitiesConverter(loadPath);
-			var humans = ctx.Load();
-			var d = new Dictionary<Guid, int>();
-
-			foreach (var human in humans)
-			{
-				d.Add(human.Id, (int)human["age"] + 1);
-				human["age"] = d.First(x => x.Key == human.Id).Value;
-			}
-
-			var meta = new MetaData()
-			{
-				LogicalName = "human",
-				KeyAttributes = "humanid",
-				Attributes = new List<MetaDataAttribute>()
-				{
-					new MetaDataAttribute() {LogicalName = "fullname", Type = DataTypes.String},
-					new MetaDataAttribute() {LogicalName = "age", Type = DataTypes.Int},
-				}
-			};
-
-			// Save and reload
-			ctx.Save(loadPath, meta, humans);
-			humans = ctx.Load();
-
-			foreach (var human in humans)
-			{
-				Assert.IsTrue((int)human["age"] == d.First(x => x.Key == human.Id).Value);
-			}
-		}
-
+		
 		[TestMethod]
 		public void Save_Entitycollection()
 		{
-			var loadPath = @".\TestFiles\Save\entitycollection-load.json";
-			var savePath = @".\TestFiles\Save\entitycollection-save.json";
+			var loadPath = this.ToPath(@"Save\entitycollection-load.json");
+			var savePath = this.ToPath(@"Save\entitycollection-expected.json");
+			var meta = GetMetaDataForEntityCollection();
 
-			var ctx = new JsonEntitiesConverter(loadPath);
-			var emails = ctx.Load();
+			var ctx = new JsonEntitiesConverter();
+			var emails = ctx.Load(loadPath);
+			ctx.Save(savePath, meta, emails);
 
-			var meta = new MetaData()
+			var txt_OnRead = RemoveWhiteSpacesAndTabs(ReadFile(loadPath));
+			var txt_OnSave = RemoveWhiteSpacesAndTabs(ReadFile(savePath));
+
+			Assert.IsTrue(txt_OnRead == txt_OnSave);
+		}
+
+		#region Helpers
+
+		[TestInitialize]
+		public void TestInitialize()
+		{
+			if (!Directory.Exists(this.ToPath(@"SaveTemporary")))
+			{
+				Directory.CreateDirectory(this.ToPath(@"SaveTemporary"));
+			}
+		}
+
+		[TestCleanup]
+		public void TestCleanup()
+		{
+			if (Directory.Exists(this.ToPath(@"SaveTemporary")))
+			{
+				Directory.Delete(this.ToPath(@"SaveTemporary"), true);
+			}
+		}
+
+		private static string ReadFile(string path)
+		{
+			using (var r = new StreamReader(path))
+			{
+				return r.ReadToEnd();
+			}
+		}
+
+		private static string RemoveWhiteSpacesAndTabs(string txt)
+		{
+			return txt.Replace('\u0009'.ToString(), "").Replace("\r", "").Replace("\n", "").Replace(" ", "");
+		}
+
+		private static MetaData GetMetaDataForEntityCollection()
+		{
+			return new MetaData()
 			{
 				LogicalName = "email",
 				KeyAttributes = "activityid",
@@ -168,8 +161,8 @@
 					},
 				}
 			};
-
-			ctx.Save(savePath, meta, emails);
 		}
+
+		#endregion Helpers
 	}
 }

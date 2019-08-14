@@ -7,17 +7,20 @@
 
 	public class JsonEntitiesConverter
 	{
-		private readonly string Path;
+		private readonly JsonEntitiesConverterSettings JsonEntitiesConverterSettings = null;
 
-		public JsonEntitiesConverter(string path)
+		public JsonEntitiesConverter() : this(new JsonEntitiesConverterSettings())
+		{}
+
+		public JsonEntitiesConverter(JsonEntitiesConverterSettings jsonEntitiesConverterSettings)
 		{
-			this.Path = path;
+			JsonEntitiesConverterSettings = jsonEntitiesConverterSettings ?? new JsonEntitiesConverterSettings();
 		}
 
-		public List<Entity> Load()
+		public List<Entity> Load(string path)
 		{
 			// Get all files
-			var files = IO.Helper.ResolveFileNames(this.Path);
+			var files = IO.Helper.ResolveFileNames(path);
 
 			// Load into models
 			var entityContainers = files.Select(f => Convert.JsonToModel(IO.Helper.ReadFile(f)));
@@ -35,17 +38,21 @@
 			return entities;
 		}
 
-		public void Save(string savePath, MetaData meta, List<Entity> collection)
+		public void Save(string path, MetaData meta, IEnumerable<Entity> collection)
+		{
+			var txt = this.ToJson(meta, collection);
+
+			// Save the Json
+			IO.Helper.SaveJson(path, txt);
+		}
+
+		public string ToJson(MetaData meta, IEnumerable<Entity> collection)
 		{
 			// Load into entityContainer
 			var entityContainer = Convert.EntityListToEntityContainer(meta, collection);
 
 			// Get Json from entityContainer
-			var txt = Convert.ModelToJson(entityContainer);
-
-			// Save the Json
-			IO.Helper.SaveJson(savePath, txt);
-			IO.Helper.SaveJson(@".\..\." + savePath, txt);		
-		}	
+			return Convert.ModelToJson(entityContainer, this.JsonEntitiesConverterSettings);
+		}
 	}
 }

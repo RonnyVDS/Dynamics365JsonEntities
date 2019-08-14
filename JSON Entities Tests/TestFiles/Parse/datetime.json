@@ -1,10 +1,10 @@
 {
 	"metadata": {
-		"logicalName": "human",
-		"keyAttributes": "humanid",
+		"logicalName": "entityname",
+		"keyAttributes": "entitynameid",
 		"attributes": [
 			{
-				"logicalName": "dateofbirth",
+				"logicalName": "datefield",
 				"type": "datetime"
 			}
 		]
@@ -12,7 +12,15 @@
 	"entities": [
 		{
 			"id": "{3293DA55-897E-4AA6-9920-5A2CE7708E83}",
-			"dateofbirth": "1993-04-29 00:00:00"
+			"datefield": "2000-02-01 21:22:23"
+		},
+		{
+			"id": "{FB1500FE-8287-4B31-80E9-08A72682CF3C}",
+			"datefield": "2000-03-04"
+		},
+		{
+			"id": "{AD1500FE-8287-4B31-80E9-08A72682CF3C}",
+			"datefield": "20000506"
 		}
 	]
 }

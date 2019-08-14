@@ -8,6 +8,15 @@
 
 	internal static partial class Convert
 	{
+		private static string[] DateTimeFormats = new string[] {
+			"yyyy-MM-dd HH:mm:ss",
+			"yyyy-MM-dd",
+			"yyyy/MM/dd HH:mm:ss",
+			"yyyy/MM/dd",
+			"yyyyMMdd HH:mm:ss",
+			"yyyyMMdd"
+		};
+
 		internal static IEnumerable<Entity> EntityContainerToEntityList(EntityContainer entityContainer)
 		{
 
@@ -72,7 +81,17 @@
 					throw new LoadJsonEntityException(LoadJsonEntityException.CannotConvertValue);
 
 				case DataTypes.DateTime:
-					if (fieldValue as string != null && DateTime.TryParse(fieldValue as string, out DateTime dtValue)) return dtValue;
+					if (DateTime.TryParseExact(
+						fieldValue as string,
+						DateTimeFormats,
+						System.Globalization.CultureInfo.InvariantCulture,
+						System.Globalization.DateTimeStyles.None,
+						out DateTime dtValue))
+					{
+						dtValue = DateTime.SpecifyKind(dtValue, DateTimeKind.Utc);
+						return dtValue;
+					}
+
 					throw new LoadJsonEntityException(LoadJsonEntityException.CannotConvertValue);
 
 				case DataTypes.EntityReference:
